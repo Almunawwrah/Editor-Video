@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZCut Pro - Professional Video Editor</title>
+    <link rel="stylesheet" href="css/editor.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Poppins:wght@400;500;600;700;800;900&family=Roboto:wght@300;400;500;700&family=Open+Sans:wght@400;600;700&family=Montserrat:wght@400;500;600;700;800;900&family=Playfair+Display:wght@400;700;900&family=Bebas+Neue&family=Oswald:wght@400;500;600;700&family=Raleway:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Splash Screen -->
+    <div id="splash-screen" class="splash-screen">
+        <div class="splash-content">
+            <div class="splash-logo">
+                <i class="fas fa-film"></i>
+                <span>ZCut Pro</span>
+            </div>
+            <div class="splash-subtitle">Professional Video Editor</div>
+            <div class="splash-loading">
+                <div class="splash-progress">
+                    <div class="splash-progress-bar"></div>
+                </div>
+                <div class="splash-status">Memuat komponen...</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application Container -->
+    <div id="app-container" class="app-container" style="display:none;">
+        
+        <!-- Top Menu Bar -->
+        <header id="menu-bar" class="menu-bar">
+            <div class="menu-left">
+                <div class="app-logo">
+                    <i class="fas fa-film"></i>
+                    <span>ZCut Pro</span>
+                </div>
+                <nav class="menu-nav">
+                    <div class="menu-item" data-menu="file">
+                        <span>File</span>
+                        <div class="menu-dropdown" id="menu-file">
+                            <div class="menu-option" data-action="new-project"><i class="fas fa-file"></i> Proyek Baru <span class="shortcut">Ctrl+N</span></div>
+                            <div class="menu-option" data-action="open-project"><i class="fas fa-folder-open"></i> Buka Proyek <span class="shortcut">Ctrl+O</span></div>
+                            <div class="menu-option" data-action="save-project"><i class="fas fa-save"></i> Simpan Proyek <span class="shortcut">Ctrl+S</span></div>
+                            <div class="menu-option" data-action="save-as-project"><i class="fas fa-file-export"></i> Simpan Sebagai <span class="shortcut">Ctrl+Shift+S</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="import-media"><i class="fas fa-file-import"></i> Impor Media <span class="shortcut">Ctrl+I</span></div>
+                            <div class="menu-option" data-action="import-folder"><i class="fas fa-folder-plus"></i> Impor Folder</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="project-settings"><i class="fas fa-cog"></i> Pengaturan Proyek</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="export-video"><i class="fas fa-video"></i> Ekspor Video <span class="shortcut">Ctrl+Shift+E</span></div>
+                            <div class="menu-option" data-action="export-frame"><i class="fas fa-image"></i> Ekspor Frame</div>
+                            <div class="menu-option" data-action="export-audio"><i class="fas fa-music"></i> Ekspor Audio</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="exit"><i class="fas fa-sign-out-alt"></i> Keluar</div>
+                        </div>
+                    </div>
+                    <div class="menu-item" data-menu="edit">
+                        <span>Edit</span>
+                        <div class="menu-dropdown" id="menu-edit">
+                            <div class="menu-option" data-action="undo"><i class="fas fa-undo"></i> Undo <span class="shortcut">Ctrl+Z</span></div>
+                            <div class="menu-option" data-action="redo"><i class="fas fa-redo"></i> Redo <span class="shortcut">Ctrl+Shift+Z</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="cut"><i class="fas fa-cut"></i> Potong <span class="shortcut">Ctrl+X</span></div>
+                            <div class="menu-option" data-action="copy"><i class="fas fa-copy"></i> Salin <span class="shortcut">Ctrl+C</span></div>
+                            <div class="menu-option" data-action="paste"><i class="fas fa-paste"></i> Tempel <span class="shortcut">Ctrl+V</span></div>
+                            <div class="menu-option" data-action="delete"><i class="fas fa-trash"></i> Hapus <span class="shortcut">Delete</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="split-clip"><i class="fas fa-scissors"></i> Split di Playhead <span class="shortcut">S</span></div>
+                            <div class="menu-option" data-action="split-all"><i class="fas fa-columns"></i> Split Semua Track <span class="shortcut">Ctrl+Shift+S</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="select-all"><i class="fas fa-object-group"></i> Pilih Semua <span class="shortcut">Ctrl+A</span></div>
+                            <div class="menu-option" data-action="deselect-all"><i class="fas fa-object-ungroup"></i> Batal Pilih <span class="shortcut">Ctrl+Shift+A</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="group"><i class="fas fa-layer-group"></i> Grup <span class="shortcut">Ctrl+G</span></div>
+                            <div class="menu-option" data-action="ungroup"><i class="fas fa-expand-arrows-alt"></i> Ungroup <span class="shortcut">Ctrl+Shift+G</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="preferences"><i class="fas fa-sliders-h"></i> Preferensi <span class="shortcut">Ctrl+,</span></div>
+                        </div>
+                    </div>
+                    <div class="menu-item" data-menu="view">
+                        <span>Tampilan</span>
+                        <div class="menu-dropdown" id="menu-view">
+                            <div class="menu-option" data-action="zoom-in"><i class="fas fa-search-plus"></i> Zoom In <span class="shortcut">Ctrl+=</span></div>
+                            <div class="menu-option" data-action="zoom-out"><i class="fas fa-search-minus"></i> Zoom Out <span class="shortcut">Ctrl+-</span></div>
+                            <div class="menu-option" data-action="zoom-fit"><i class="fas fa-expand"></i> Sesuaikan Zoom <span class="shortcut">Ctrl+0</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="toggle-media-panel"><i class="fas fa-photo-video"></i> Panel Media</div>
+                            <div class="menu-option" data-action="toggle-effects-panel"><i class="fas fa-magic"></i> Panel Efek</div>
+                            <div class="menu-option" data-action="toggle-properties-panel"><i class="fas fa-info-circle"></i> Panel Properti</div>
+                            <div class="menu-option" data-action="toggle-audio-mixer"><i class="fas fa-volume-up"></i> Audio Mixer</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="toggle-fullscreen"><i class="fas fa-expand-arrows-alt"></i> Layar Penuh <span class="shortcut">F11</span></div>
+                            <div class="menu-option" data-action="toggle-preview-fullscreen"><i class="fas fa-tv"></i> Preview Penuh <span class="shortcut">F</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="toggle-waveform"><i class="fas fa-wave-square"></i> Tampilkan Waveform</div>
+                            <div class="menu-option" data-action="toggle-thumbnails"><i class="fas fa-th"></i> Tampilkan Thumbnail</div>
+                            <div class="menu-option" data-action="toggle-snap"><i class="fas fa-magnet"></i> Snap ke Grid <span class="shortcut">N</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="toggle-dark-mode"><i class="fas fa-moon"></i> Mode Gelap</div>
+                        </div>
+                    </div>
+                    <div class="menu-item" data-menu="clip">
+                        <span>Klip</span>
+                        <div class="menu-dropdown" id="menu-clip">
+                            <div class="menu-option" data-action="clip-speed"><i class="fas fa-tachometer-alt"></i> Kecepatan/Durasi <span class="shortcut">Ctrl+R</span></div>
+                            <div class="menu-option" data-action="clip-reverse"><i class="fas fa-backward"></i> Putar Mundur</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="clip-freeze"><i class="fas fa-snowflake"></i> Freeze Frame <span class="shortcut">Shift+P</span></div>
+                            <div class="menu-option" data-action="clip-insert"><i class="fas fa-arrow-right"></i> Sisipkan <span class="shortcut">,</span></div>
+                            <div class="menu-option" data-action="clip-overwrite"><i class="fas fa-pen"></i> Timpa <span class="shortcut">.</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="clip-nest"><i class="fas fa-box"></i> Nest Sequence</div>
+                            <div class="menu-option" data-action="clip-unlink"><i class="fas fa-unlink"></i> Unlink Audio <span class="shortcut">Ctrl+L</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="clip-add-transition"><i class="fas fa-exchange-alt"></i> Tambah Transisi</div>
+                            <div class="menu-option" data-action="clip-add-effect"><i class="fas fa-magic"></i> Tambah Efek</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="clip-remove-effects"><i class="fas fa-eraser"></i> Hapus Semua Efek</div>
+                            <div class="menu-option" data-action="clip-razor"><i class="fas fa-cut"></i> Razor Tool <span class="shortcut">C</span></div>
+                        </div>
+                    </div>
+                    <div class="menu-item" data-menu="sequence">
+                        <span>Sequence</span>
+                        <div class="menu-dropdown" id="menu-sequence">
+                            <div class="menu-option" data-action="seq-add-track"><i class="fas fa-plus"></i> Tambah Track Video <span class="shortcut">Ctrl+Shift+A</span></div>
+                            <div class="menu-option" data-action="seq-add-audio-track"><i class="fas fa-plus"></i> Tambah Track Audio</div>
+                            <div class="menu-option" data-action="seq-delete-track"><i class="fas fa-minus"></i> Hapus Track Kosong</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="seq-render-preview"><i class="fas fa-play-circle"></i> Render Preview <span class="shortcut">Enter</span></div>
+                            <div class="menu-option" data-action="seq-delete-render"><i class="fas fa-trash-alt"></i> Hapus Render Preview</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="seq-add-marker"><i class="fas fa-map-marker-alt"></i> Tambah Marker <span class="shortcut">M</span></div>
+                            <div class="menu-option" data-action="seq-clear-markers"><i class="fas fa-times-circle"></i> Hapus Semua Marker</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="seq-lift"><i class="fas fa-arrow-up"></i> Lift <span class="shortcut">;</span></div>
+                            <div class="menu-option" data-action="seq-extract"><i class="fas fa-arrow-right"></i> Extract <span class="shortcut">'</span></div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="seq-ripple-delete"><i class="fas fa-backspace"></i> Ripple Delete <span class="shortcut">Shift+Delete</span></div>
+                            <div class="menu-option" data-action="seq-ripple-trim"><i class="fas fa-arrows-alt-h"></i> Ripple Trim</div>
+                        </div>
+                    </div>
+                    <div class="menu-item" data-menu="effects">
+                        <span>Efek</span>
+                        <div class="menu-dropdown" id="menu-effects">
+                            <div class="menu-option" data-action="fx-color-correction"><i class="fas fa-palette"></i> Koreksi Warna</div>
+                            <div class="menu-option" data-action="fx-color-grading"><i class="fas fa-adjust"></i> Color Grading</div>
+                            <div class="menu-option" data-action="fx-curves"><i class="fas fa-chart-line"></i> Kurva</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="fx-blur"><i class="fas fa-eye-slash"></i> Blur</div>
+                            <div class="menu-option" data-action="fx-sharpen"><i class="fas fa-bullseye"></i> Sharpen</div>
+                            <div class="menu-option" data-action="fx-noise"><i class="fas fa-braille"></i> Noise/Grain</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="fx-chroma-key"><i class="fas fa-key"></i> Chroma Key (Green Screen)</div>
+                            <div class="menu-option" data-action="fx-luma-key"><i class="fas fa-sun"></i> Luma Key</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="fx-distort"><i class="fas fa-water"></i> Distort</div>
+                            <div class="menu-option" data-action="fx-stylize"><i class="fas fa-paint-brush"></i> Stylize</div>
+                            <div class="menu-option" data-action="fx-transform"><i class="fas fa-expand-arrows-alt"></i> Transform</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="fx-audio-fade"><i class="fas fa-volume-down"></i> Audio Fade</div>
+                            <div class="menu-option" data-action="fx-audio-eq"><i class="fas fa-sliders-h"></i> Equalizer</div>
+                            <div class="menu-option" data-action="fx-audio-compressor"><i class="fas fa-compress"></i> Compressor</div>
+                        </div>
+                    </div>
+                    <div class="menu-item" data-menu="window">
+                        <span>Jendela</span>
+                        <div class="menu-dropdown" id="menu-window">
+                            <div class="menu-option" data-action="win-reset-layout"><i class="fas fa-th-large"></i> Reset Layout</div>
+                            <div class="menu-option" data-action="win-save-layout"><i class="fas fa-save"></i> Simpan Layout</div>
+                            <div class="menu-separator"></div>
+                            <div class="menu-option" data-action="win-media-bin"><i class="fas fa-photo-video"></i> Media Bin</div>
+                            <div class="menu-option" data-action="win-effects-panel"><i class="fas fa-magic"></i> Efek</div>
+                            <div class="menu-option" data-action="win-transitions-panel"><i class="fas fa-exchange-alt"></i> Transisi</div>
+                            <div class="menu-option" data-action="win-text-panel"><i class="fas fa-font"></i> Teks</div>
+                            <div class="menu-option" data-action="win-stickers-panel"><i class="fas fa-smile"></i> Stiker</div>
+                            <div class="menu-option" data-action="win-audio-mixer"><i class="fas fa-volume-up"></i> Audio Mixer</div>
+                            <div class="menu-option" data-action="win-color-wheel"><i class="fas fa-circle-notch"></i> Color Wheel</div>
+                            <div class="menu-option" data-action="win-keyframe-editor"><i class="fas fa-bezier-curve"></i> Keyframe Editor</div>
+                            <div class="menu-option" data-action="win-history"><i class="fas fa-history"></i> Riwayat</div>
+                        </div>
+                    </div>
+                    <div class="menu-item" data-menu="help">
+                        <span>Bantuan</span>
+                        <div class="menu-dropdown" id="menu-help">
+                            <div class="menu-option" data-action="help-shortcuts"><i class="fas fa-keyboard"></i> Pintasan Keyboard <span class="shortcut">Ctrl+/</span></div>
+                            <div class="menu-option" data-action="help-tutorials"><i class="fas fa-graduation-cap"></i> Tutorial</div>
+                            <div class="menu-option" data-action="help-about"><i class="fas fa-info-circle"></i> Tentang ZCut Pro</div>
+                            <div class="menu-option" data-action="help-check-update"><i class="fas fa-sync"></i> Periksa Pembaruan</div>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+            <div class="menu-center">
+                <span id="project-name" class="project-name">Proyek Tanpa Judul</span>
+            </div>
+            <div class="menu-right">
+                <div class="workspace-switcher">
+                    <button class="workspace-btn active" data-workspace="edit">Edit</button>
+                    <button class="workspace-btn" data-workspace="color">Color</button>
+                    <button class="workspace-btn" data-workspace="audio">Audio</button>
+                    <button class="workspace-btn" data-workspace="effects">Effects</button>
+                </div>
+            </div>
+        </header>
+
+        <!-- Toolbar -->
+        <div id="toolbar" class="toolbar">
+            <div class="toolbar-group toolbar-left">
+                <button class="tool-btn active" data-tool="select" title="Selection Tool (V)">
+                    <i class="fas fa-mouse-pointer"></i>
+                </button>
+                <button class="tool-btn" data-tool="razor" title="Razor Tool (C)">
+                    <i class="fas fa-cut"></i>
+                </button>
+                <button class="tool-btn" data-tool="slip" title="Slip Tool (Y)">
+                    <i class="fas fa-arrows-alt-h"></i>
+                </button>
+                <button class="tool-btn" data-tool="slide" title="Slide Tool (U)">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+                <button class="tool-btn" data-tool="hand" title="Hand Tool (H)">
+                    <i class="fas fa-hand-paper"></i>
+                </button>
+                <button class="tool-btn" data-tool="zoom" title="Zoom Tool (Z)">
+                    <i class="fas fa-search-plus"></i>
+                </button>
+                <button class="tool-btn" data-tool="pen" title="Pen Tool (P)">
+                    <i class="fas fa-pen"></i>
+                </button>
+                <button class="tool-btn" data-tool="text" title="Text Tool (T)">
+                    <i class="fas fa-font"></i>
+                </button>
+                <button class="tool-btn" data-tool="crop" title="Crop Tool">
+                    <i class="fas fa-crop-alt"></i>
+                </button>
+            </div>
+            <div class="toolbar-divider"></div>
+            <div class="toolbar-group toolbar-center">
+                <button class="tool-btn" data-action="snap-toggle" title="Snap (N)" id="snap-btn">
+                    <i class="fas fa-magnet"></i>
+                </button>
+                <button class="tool-btn" data-action="link-toggle" title="Link A/V" id="link-btn">
+                    <i class="fas fa-link"></i>
+                </button>
+                <div class="toolbar-divider"></div>
+                <button class="tool-btn" data-action="add-marker" title="Tambah Marker (M)">
+                    <i class="fas fa-map-marker-alt"></i>
+                </button>
+                <button class="tool-btn" data-action="add-text" title="Tambah Teks">
+                    <i class="fas fa-text-height"></i>
+                </button>
+                <button class="tool-btn" data-action="add-shape" title="Tambah Bentuk">
+                    <i class="fas fa-shapes"></i>
+                </button>
+            </div>
+            <div class="toolbar-divider"></div>
+            <div class="toolbar-group toolbar-right">
+                <select id="aspect-ratio-select" class="tool-select" title="Aspect Ratio">
+                    <option value="16:9">16:9</option>
+                    <option value="9:16">9:16</option>
+                    <option value="1:1">1:1</option>
+                    <option value="4:3">4:3</option>
+                    <option value="4:5">4:5</option>
+                    <option value="21:9">21:9</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <select id="resolution-select" class="tool-select" title="Resolusi">
+                    <option value="3840x2160">4K (3840x2160)</option>
+                    <option value="2560x1440">2K (2560x1440)</option>
+                    <option value="1920x1080" selected>Full HD (1920x1080)</option>
+                    <option value="1280x720">HD (1280x720)</option>
+                    <option value="854x480">SD (854x480)</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <select id="fps-select" class="tool-select" title="Frame Rate">
+                    <option value="24">24 fps</option>
+                    <option value="25">25 fps</option>
+                    <option value="30" selected>30 fps</option>
+                    <option value="50">50 fps</option>
+                    <option value="60">60 fps</option>
+                    <option value="120">120 fps</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div id="main-content" class="main-content">
+            
+            <!-- Left Panel - Media Browser / Effects / Transitions / Text -->
+            <div id="left-panel" class="left-panel">
+                <div class="panel-tabs">
+                    <button class="panel-tab active" data-panel="media">
+                        <i class="fas fa-photo-video"></i>
+                        <span>Media</span>
+                    </button>
+                    <button class="panel-tab" data-panel="effects">
+                        <i class="fas fa-magic"></i>
+                        <span>Efek</span>
+                    </button>
+                    <button class="panel-tab" data-panel="transitions">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>Transisi</span>
+                    </button>
+                    <button class="panel-tab" data-panel="text">
+                        <i class="fas fa-font"></i>
+                        <span>Teks</span>
+                    </button>
+                    <button class="panel-tab" data-panel="stickers">
+                        <i class="fas fa-smile"></i>
+                        <span>Stiker</span>
+                    </button>
+                    <button class="panel-tab" data-panel="audio-library">
+                        <i class="fas fa-music"></i>
+                        <span>Audio</span>
+                    </button>
+                </div>
+                
+                <!-- Media Panel -->
+                <div id="panel-media" class="panel-content active">
+                    <div class="panel-header">
+                        <div class="panel-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Cari media..." id="media-search">
+                        </div>
+                        <div class="panel-actions">
+                            <button class="icon-btn" id="import-media-btn" title="Impor Media"><i class="fas fa-plus"></i></button>
+                            <button class="icon-btn" id="media-grid-view" title="Tampilan Grid"><i class="fas fa-th"></i></button>
+                            <button class="icon-btn" id="media-list-view" title="Tampilan List"><i class="fas fa-list"></i></button>
+                            <button class="icon-btn" id="media-filter-btn" title="Filter"><i class="fas fa-filter"></i></button>
+                        </div>
+                    </div>
+                    <div class="media-filter-bar" id="media-filter-bar" style="display:none;">
+                        <button class="filter-chip active" data-filter="all">Semua</button>
+                        <button class="filter-chip" data-filter="video">Video</button>
+                        <button class="filter-chip" data-filter="audio">Audio</button>
+                        <button class="filter-chip" data-filter="image">Gambar</button>
+                    </div>
+                    <div id="media-browser" class="media-browser">
+                        <div class="media-empty-state">
+                            <i class="fas fa-cloud-upload-alt"></i>
+                            <h3>Impor Media</h3>
+                            <p>Klik tombol + atau drag & drop file ke sini</p>
+                            <p class="media-formats">Mendukung: MP4, MOV, AVI, MKV, MP3, WAV, AAC, PNG, JPG, SVG, GIF, WebM</p>
+                            <button class="btn-primary" id="import-media-empty-btn">
+                                <i class="fas fa-plus"></i> Impor File
+                            </button>
+                        </div>
+                    </div>
+                    <div id="media-context-menu" class="context-menu" style="display:none;">
+                        <div class="context-option" data-action="preview"><i class="fas fa-play"></i> Preview</div>
+                        <div class="context-option" data-action="add-to-timeline"><i class="fas fa-plus-circle"></i> Tambah ke Timeline</div>
+                        <div class="context-option" data-action="replace-clip"><i class="fas fa-exchange-alt"></i> Ganti Klip</div>
+                        <div class="context-separator"></div>
+                        <div class="context-option" data-action="properties"><i class="fas fa-info-circle"></i> Properti</div>
+                        <div class="context-option" data-action="rename"><i class="fas fa-edit"></i> Ganti Nama</div>
+                        <div class="context-option" data-action="duplicate"><i class="fas fa-clone"></i> Duplikat</div>
+                        <div class="context-separator"></div>
+                        <div class="context-option" data-action="delete" class="danger"><i class="fas fa-trash"></i> Hapus</div>
+                    </div>
+                </div>
+
+                <!-- Effects Panel -->
+                <div id="panel-effects" class="panel-content">
+                    <div class="panel-header">
+                        <div class="panel-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Cari efek..." id="effects-search">
+                        </div>
+                    </div>
+                    <div class="effects-categories">
+                        <div class="effect-category">
+                            <div class="category-header"><i class="fas fa-palette"></i> Warna</div>
+                            <div class="category-items">
+                                <div class="effect-item" data-effect="brightness" draggable="true"><i class="fas fa-sun"></i> Kecerahan</div>
+                                <div class="effect-item" data-effect="contrast" draggable="true"><i class="fas fa-adjust"></i> Kontras</div>
+                                <div class="effect-item" data-effect="saturation" draggable="true"><i class="fas fa-tint"></i> Saturasi</div>
+                                <div class="effect-item" data-effect="hue-rotate" draggable="true"><i class="fas fa-sync"></i> Rotasi Hue</div>
+                                <div class="effect-item" data-effect="temperature" draggable="true"><i class="fas fa-thermometer-half"></i> Suhu Warna</div>
+                                <div class="effect-item" data-effect="tint" draggable="true"><i class="fas fa-fill-drip"></i> Tint</div>
+                                <div class="effect-item" data-effect="vibrance" draggable="true"><i class="fas fa-eye-dropper"></i> Vibrance</div>
+                                <div class="effect-item" data-effect="exposure" draggable="true"><i class="fas fa-lightbulb"></i> Exposure</div>
+                                <div class="effect-item" data-effect="highlights" draggable="true"><i class="fas fa-star"></i> Highlights</div>
+                                <div class="effect-item" data-effect="shadows" draggable="true"><i class="fas fa-moon"></i> Shadows</div>
+                                <div class="effect-item" data-effect="whites" draggable="true"><i class="fas fa-square"></i> Whites</div>
+                                <div class="effect-item" data-effect="blacks" draggable="true"><i class="fas fa-square-full"></i> Blacks</div>
+                            </div>
+                        </div>
+                        <div class="effect-category">
+                            <div class="category-header"><i class="fas fa-eye-slash"></i> Blur & Sharpen</div>
+                            <div class="category-items">
+                                <div class="effect-item" data-effect="gaussian-blur" draggable="true"><i class="fas fa-circle"></i> Gaussian Blur</div>
+                                <div class="effect-item" data-effect="motion-blur" draggable="true"><i class="fas fa-wind"></i> Motion Blur</div>
+                                <div class="effect-item" data-effect="radial-blur" draggable="true"><i class="fas fa-bullseye"></i> Radial Blur</div>
+                                <div class="effect-item" data-effect="tilt-shift" draggable="true"><i class="fas fa-compress-alt"></i> Tilt Shift</div>
+                                <div class="effect-item" data-effect="sharpen" draggable="true"><i class="fas fa-bullseye"></i> Sharpen</div>
+                                <div class="effect-item" data-effect="unsharp-mask" draggable="true"><i class="fas fa-mask"></i> Unsharp Mask</div>
+                            </div>
+                        </div>
+                        <div class="effect-category">
+                            <div class="category-header"><i class="fas fa-paint-brush"></i> Stylize</div>
+                            <div class="category-items">
+                                <div class="effect-item" data-effect="glitch" draggable="true"><i class="fas fa-bolt"></i> Glitch</div>
+                                <div class="effect-item" data-effect="vhs" draggable="true"><i class="fas fa-video"></i> VHS Retro</div>
+                                <div class="effect-item" data-effect="film-grain" draggable="true"><i class="fas fa-film"></i> Film Grain</div>
+                                <div class="effect-item" data-effect="pixelate" draggable="true"><i class="fas fa-th"></i> Pixelate</div>
+                                <div class="effect-item" data-effect="mosaic" draggable="true"><i class="fas fa-border-all"></i> Mosaic</div>
+                                <div class="effect-item" data-effect="comic" draggable="true"><i class="fas fa-book"></i> Comic</div>
+                                <div class="effect-item" data-effect="sketch" draggable="true"><i class="fas fa-pencil-alt"></i> Sketch</div>
+                                <div class="effect-item" data-effect="oil-paint" draggable="true"><i class="fas fa-paint-roller"></i> Oil Paint</div>
+                                <div class="effect-item" data-effect="watercolor" draggable="true"><i class="fas fa-tint"></i> Watercolor</div>
+                                <div class="effect-item" data-effect="neon" draggable="true"><i class="fas fa-lightbulb"></i> Neon Glow</div>
+                                <div class="effect-item" data-effect="duotone" draggable="true"><i class="fas fa-palette"></i> Duotone</div>
+                                <div class="effect-item" data-effect="posterize" draggable="true"><i class="fas fa-image"></i> Posterize</div>
+                                <div class="effect-item" data-effect="solarize" draggable="true"><i class="fas fa-sun"></i> Solarize</div>
+                                <div class="effect-item" data-effect="emboss" draggable="true"><i class="fas fa-stamp"></i> Emboss</div>
+                            </div>
+                        </div>
+                        <div class="effect-category">
+                            <div class="category-header"><i class="fas fa-key"></i> Keying</div>
+                            <div class="category-items">
+                                <div class="effect-item" data-effect="chroma-key" draggable="true"><i class="fas fa-key"></i> Chroma Key</div>
+                                <div class="effect-item" data-effect="luma-key" draggable="true"><i class="fas fa-sun"></i> Luma Key</div>
+                                <div class="effect-item" data-effect="color-key" draggable="true"><i class="fas fa-eye-dropper"></i> Color Key</div>
+                                <div class="effect-item" data-effect="difference-key" draggable="true"><i class="fas fa-not-equal"></i> Difference Key</div>
+                            </div>
+                        </div>
+                        <div class="effect-category">
+                            <div class="category-header"><i class="fas fa-water"></i> Distort</div>
+                            <div class="category-items">
+                                <div class="effect-item" data-effect="wave" draggable="true"><i class="fas fa-water"></i> Wave</div>
+                                <div class="effect-item" data-effect="ripple" draggable="true"><i class="fas fa-bullseye"></i> Ripple</div>
+                                <div class="effect-item" data-effect="lens-distortion" draggable="true"><i class="fas fa-eye"></i> Lens Distortion</div>
+                                <div class="effect-item" data-effect="spherize" draggable="true"><i class="fas fa-globe"></i> Spherize</div>
+                                <div class="effect-item" data-effect="twirl" draggable="true"><i class="fas fa-sync"></i> Twirl</div>
+                                <div class="effect-item" data-effect="mirror" draggable="true"><i class="fas fa-columns"></i> Mirror</div>
+                                <div class="effect-item" data-effect="kaleidoscope" draggable="true"><i class="fas fa-snowflake"></i> Kaleidoscope</div>
+                            </div>
+                        </div>
+                        <div class="effect-category">
+                            <div class="category-header"><i class="fas fa-expand-arrows-alt"></i> Transform</div>
+                            <div class="category-items">
+                                <div class="effect-item" data-effect="rotate" draggable="true"><i class="fas fa-redo"></i> Rotate</div>
+                                <div class="effect-item" data-effect="scale" draggable="true"><i class="fas fa-expand"></i> Scale</div>
+                                <div class="effect-item" data-effect="position" draggable="true"><i class="fas fa-arrows-alt"></i> Position</div>
+                                <div class="effect-item" data-effect="flip" draggable="true"><i class="fas fa-arrows-alt-h"></i> Flip</div>
+                                <div class="effect-item" data-effect="crop" draggable="true"><i class="fas fa-crop-alt"></i> Crop</div>
+                                <div class="effect-item" data-effect="perspective" draggable="true"><i class="fas fa-vector-square"></i> Perspective</div>
+                                <div class="effect-item" data-effect="corner-pin" draggable="true"><i class="fas fa-thumbtack"></i> Corner Pin</div>
+                            </div>
+                        </div>
+                        <div class="effect-category">
+                            <div class="category-header"><i class="fas fa-clock"></i> Time</div>
+                            <div class="category-items">
+                                <div class="effect-item" data-effect="speed" draggable="true"><i class="fas fa-tachometer-alt"></i> Speed</div>
+                                <div class="effect-item" data-effect="reverse" draggable="true"><i class="fas fa-backward"></i> Reverse</div>
+                                <div class="effect-item" data-effect="freeze-frame" draggable="true"><i class="fas fa-pause"></i> Freeze Frame</div>
+                                <div class="effect-item" data-effect="time-remap" draggable="true"><i class="fas fa-bezier-curve"></i> Time Remap</div>
+                                <div class="effect-item" data-effect="echo" draggable="true"><i class="fas fa-clone"></i> Echo</div>
+                                <div class="effect-item" data-effect="trail" draggable="true"><i class="fas fa-shoe-prints"></i> Motion Trail</div>
+                            </div>
+                        </div>
+                        <div class="effect-category">
+                            <div class="category-header"><i class="fas fa-volume-up"></i> Audio</div>
+                            <div class="category-items">
+                                <div class="effect-item" data-effect="volume" draggable="true"><i class="fas fa-volume-up"></i> Volume</div>
+                                <div class="effect-item" data-effect="fade-in" draggable="true"><i class="fas fa-sign-in-alt"></i> Fade In</div>
+                                <div class="effect-item" data-effect="fade-out" draggable="true"><i class="fas fa-sign-out-alt"></i> Fade Out</div>
+                                <div class="effect-item" data-effect="equalizer" draggable="true"><i class="fas fa-sliders-h"></i> Equalizer</div>
+                                <div class="effect-item" data-effect="compressor" draggable="true"><i class="fas fa-compress"></i> Compressor</div>
+                                <div class="effect-item" data-effect="reverb" draggable="true"><i class="fas fa-church"></i> Reverb</div>
+                                <div class="effect-item" data-effect="noise-reduction" draggable="true"><i class="fas fa-volume-mute"></i> Noise Reduction</div>
+                                <div class="effect-item" data-effect="normalize" draggable="true"><i class="fas fa-balance-scale"></i> Normalize</div>
+                                <div class="effect-item" data-effect="pitch-shift" draggable="true"><i class="fas fa-music"></i> Pitch Shift</div>
+                                <div class="effect-item" data-effect="bass-boost" draggable="true"><i class="fas fa-drum"></i> Bass Boost</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Transitions Panel -->
+                <div id="panel-transitions" class="panel-content">
+                    <div class="panel-header">
+                        <div class="panel-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Cari transisi..." id="transitions-search">
+                        </div>
+                    </div>
+                    <div class="transitions-categories">
+                        <div class="transition-category">
+                            <div class="category-header"><i class="fas fa-magic"></i> Dissolve</div>
+                            <div class="category-items">
+                                <div class="transition-item" data-transition="cross-dissolve" draggable="true">
+                                    <div class="transition-preview">◐</div>Cross Dissolve
+                                </div>
+                                <div class="transition-item" data-transition="dip-black" draggable="true">
+                                    <div class="transition-preview">⬤</div>Dip to Black
+                                </div>
+                                <div class="transition-item" data-transition="dip-white" draggable="true">
+                                    <div class="transition-preview">◯</div>Dip to White
+                                </div>
+                                <div class="transition-item" data-transition="film-dissolve" draggable="true">
+                                    <div class="transition-preview">◑</div>Film Dissolve
+                                </div>
+                                <div class="transition-item" data-transition="additive-dissolve" draggable="true">
+                                    <div class="transition-preview">⊕</div>Additive Dissolve
+                                </div>
+                            </div>
+                        </div>
+                        <div class="transition-category">
+                            <div class="category-header"><i class="fas fa-arrows-alt-h"></i> Slide</div>
+                            <div class="category-items">
+                                <div class="transition-item" data-transition="slide-left" draggable="true">
+                                    <div class="transition-preview">◀</div>Slide Left
+                                </div>
+                                <div class="transition-item" data-transition="slide-right" draggable="true">
+                                    <div class="transition-preview">▶</div>Slide Right
+                                </div>
+                                <div class="transition-item" data-transition="slide-up" draggable="true">
+                                    <div class="transition-preview">▲</div>Slide Up
+                                </div>
+                                <div class="transition-item" data-transition="slide-down" draggable="true">
+                                    <div class="transition-preview">▼</div>Slide Down
+                                </div>
+                                <div class="transition-item" data-transition="push-left" draggable="true">
+                                    <div class="transition-preview">⇐</div>Push Left
+                                </div>
+                                <div class="transition-item" data-transition="push-right" draggable="true">
+                                    <div class="transition-preview">⇒</div>Push Right
+                                </div>
+                            </div>
+                        </div>
+                        <div class="transition-category">
+                            <div class="category-header"><i class="fas fa-sync"></i> Wipe</div>
+                            <div class="category-items">
+                                <div class="transition-item" data-transition="wipe-left" draggable="true">
+                                    <div class="transition-preview">◧</div>Wipe Left
+                                </div>
+                                <div class="transition-item" data-transition="wipe-right" draggable="true">
+                                    <div class="transition-preview">◨</div>Wipe Right
+                                </div>
+                                <div class="transition-item" data-transition="wipe-up" draggable="true">
+                                    <div class="transition-preview">⬒</div>Wipe Up
+                                </div>
+                                <div class="transition-item" data-transition="wipe-down" draggable="true">
+                                    <div class="transition-preview">⬓</div>Wipe Down
+                                </div>
+                                <div class="transition-item" data-transition="clock-wipe" draggable="true">
+                                    <div class="transition-preview">◔</div>Clock Wipe
+                                </div>
+                                <div class="transition-item" data-transition="radial-wipe" draggable="true">
+                                    <div class="transition-preview">◖</div>Radial Wipe
+                                </div>
+                                <div class="transition-item" data-transition="iris-wipe" draggable="true">
+                                    <div class="transition-preview">⬬</div>Iris Wipe
+                                </div>
+                            </div>
+                        </div>
+                        <div class="transition-category">
+                            <div class="category-header"><i class="fas fa-expand"></i> Zoom</div>
+                            <div class="category-items">
+                                <div class="transition-item" data-transition="zoom-in" draggable="true">
+                                    <div class="transition-preview">⊕</div>Zoom In
+                                </div>
+                                <div class="transition-item" data-transition="zoom-out" draggable="true">
+                                    <div class="transition-preview">⊖</div>Zoom Out
+                                </div>
+                                <div class="transition-item" data-transition="zoom-spin" draggable="true">
+                                    <div class="transition-preview">⊛</div>Zoom Spin
+                                </div>
+                            </div>
+                        </div>
+                        <div class="transition-category">
+                            <div class="category-header"><i class="fas fa-star"></i> Special</div>
+                            <div class="category-items">
+                                <div class="transition-item" data-transition="page-turn" draggable="true">
+                                    <div class="transition-preview">📄</div>Page Turn
+                                </div>
+                                <div class="transition-item" data-transition="cube-rotate" draggable="true">
+                                    <div class="transition-preview">◻</div>Cube Rotate
+                                </div>
+                                <div class="transition-item" data-transition="flip" draggable="true">
+                                    <div class="transition-preview">↻</div>Flip
+                                </div>
+                                <div class="transition-item" data-transition="glitch-transition" draggable="true">
+                                    <div class="transition-preview">⚡</div>Glitch
+                                </div>
+                                <div class="transition-item" data-transition="flash" draggable="true">
+                                    <div class="transition-preview">✦</div>Flash
+                                </div>
+                                <div class="transition-item" data-transition="ink-splash" draggable="true">
+                                    <div class="transition-preview">💧</div>Ink Splash
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Text Panel -->
+                <div id="panel-text" class="panel-content">
+                    <div class="panel-header">
+                        <button class="btn-primary" id="add-text-btn"><i class="fas fa-plus"></i> Tambah Teks</button>
+                    </div>
+                    <div class="text-templates">
+                        <div class="text-template-category">
+                            <div class="category-header">Template Judul</div>
+                            <div class="text-template-grid">
+                                <div class="text-template-item" data-template="title-simple" draggable="true">
+                                    <div class="template-preview">Aa</div>
+                                    <span>Judul Sederhana</span>
+                                </div>
+                                <div class="text-template-item" data-template="title-bold" draggable="true">
+                                    <div class="template-preview" style="font-weight:900;">Aa</div>
+                                    <span>Judul Bold</span>
+                                </div>
+                                <div class="text-template-item" data-template="title-outline" draggable="true">
+                                    <div class="template-preview" style="-webkit-text-stroke:1px white;color:transparent;">Aa</div>
+                                    <span>Outline</span>
+                                </div>
+                                <div class="text-template-item" data-template="title-shadow" draggable="true">
+                                    <div class="template-preview" style="text-shadow:2px 2px 4px rgba(0,0,0,0.5);">Aa</div>
+                                    <span>Shadow</span>
+                                </div>
+                                <div class="text-template-item" data-template="title-neon" draggable="true">
+                                    <div class="template-preview" style="text-shadow:0 0 10px #0ff,0 0 20px #0ff;color:#0ff;">Aa</div>
+                                    <span>Neon</span>
+                                </div>
+                                <div class="text-template-item" data-template="title-gradient" draggable="true">
+                                    <div class="template-preview" style="background:linear-gradient(90deg,#ff0,#f0f);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Aa</div>
+                                    <span>Gradient</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-template-category">
+                            <div class="category-header">Subtitle & Caption</div>
+                            <div class="text-template-grid">
+                                <div class="text-template-item" data-template="subtitle" draggable="true">
+                                    <div class="template-preview" style="font-size:12px;">Subtitle</div>
+                                    <span>Subtitle</span>
+                                </div>
+                                <div class="text-template-item" data-template="caption-box" draggable="true">
+                                    <div class="template-preview" style="background:rgba(0,0,0,0.7);padding:2px 6px;font-size:10px;border-radius:3px;">Caption</div>
+                                    <span>Caption Box</span>
+                                </div>
+                                <div class="text-template-item" data-template="lower-third" draggable="true">
+                                    <div class="template-preview" style="border-left:3px solid #4a9eff;padding-left:6px;font-size:10px;">Lower Third</div>
+                                    <span>Lower Third</span>
+                                </div>
+                                <div class="text-template-item" data-template="typewriter" draggable="true">
+                                    <div class="template-preview" style="font-family:'JetBrains Mono',monospace;font-size:11px;">Typewriter|</div>
+                                    <span>Typewriter</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-template-category">
+                            <div class="category-header">Animasi Teks</div>
+                            <div class="text-template-grid">
+                                <div class="text-template-item" data-template="text-fade-in" draggable="true">
+                                    <div class="template-preview">Fade In</div>
+                                    <span>Fade In</span>
+                                </div>
+                                <div class="text-template-item" data-template="text-slide-up" draggable="true">
+                                    <div class="template-preview">Slide Up</div>
+                                    <span>Slide Up</span>
+                                </div>
+                                <div class="text-template-item" data-template="text-scale" draggable="true">
+                                    <div class="template-preview">Scale</div>
+                                    <span>Scale Up</span>
+                                </div>
+                                <div class="text-template-item" data-template="text-typewriter" draggable="true">
+                                    <div class="template-preview">Type</div>
+                                    <span>Typing</span>
+                                </div>
+                                <div class="text-template-item" data-template="text-glitch" draggable="true">
+                                    <div class="template-preview">Glitch</div>
+                                    <span>Glitch</span>
+                                </div>
+                                <div class="text-template-item" data-template="text-bounce" draggable="true">
+                                    <div class="template-preview">Bounce</div>
+                                    <span>Bounce</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Stickers Panel -->
+                <div id="panel-stickers" class="panel-content">
+                    <div class="panel-header">
+                        <div class="panel-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Cari stiker..." id="stickers-search">
+                        </div>
+                    </div>
+                    <div class="stickers-categories">
+                        <div class="stickers-category">
+                            <div class="category-header">Bentuk Dasar</div>
+                            <div class="stickers-grid">
+                                <div class="sticker-item" data-sticker="circle" draggable="true"><i class="fas fa-circle"></i></div>
+                                <div class="sticker-item" data-sticker="square" draggable="true"><i class="fas fa-square"></i></div>
+                                <div class="sticker-item" data-sticker="triangle" draggable="true"><i class="fas fa-play" style="transform:rotate(-90deg)"></i></div>
+                                <div class="sticker-item" data-sticker="star" draggable="true"><i class="fas fa-star"></i></div>
+                                <div class="sticker-item" data-sticker="heart" draggable="true"><i class="fas fa-heart"></i></div>
+                                <div class="sticker-item" data-sticker="diamond" draggable="true"><i class="fas fa-diamond"></i></div>
+                                <div class="sticker-item" data-sticker="hexagon" draggable="true"><i class="fas fa-hexagon-xmark"></i></div>
+                                <div class="sticker-item" data-sticker="arrow" draggable="true"><i class="fas fa-arrow-right"></i></div>
+                            </div>
+                        </div>
+                        <div class="stickers-category">
+                            <div class="category-header">Simbol</div>
+                            <div class="stickers-grid">
+                                <div class="sticker-item" data-sticker="check" draggable="true"><i class="fas fa-check-circle"></i></div>
+                                <div class="sticker-item" data-sticker="cross" draggable="true"><i class="fas fa-times-circle"></i></div>
+                                <div class="sticker-item" data-sticker="info" draggable="true"><i class="fas fa-info-circle"></i></div>
+                                <div class="sticker-item" data-sticker="warning" draggable="true"><i class="fas fa-exclamation-triangle"></i></div>
+                                <div class="sticker-item" data-sticker="like" draggable="true"><i class="fas fa-thumbs-up"></i></div>
+                                <div class="sticker-item" data-sticker="fire" draggable="true"><i class="fas fa-fire"></i></div>
+                                <div class="sticker-item" data-sticker="bolt" draggable="true"><i class="fas fa-bolt"></i></div>
+                                <div class="sticker-item" data-sticker="crown" draggable="true"><i class="fas fa-crown"></i></div>
+                            </div>
+                        </div>
+                        <div class="stickers-category">
+                            <div class="category-header">Overlay</div>
+                            <div class="stickers-grid">
+                                <div class="sticker-item" data-sticker="vignette" draggable="true"><div class="overlay-preview vignette"></div></div>
+                                <div class="sticker-item" data-sticker="light-leak" draggable="true"><div class="overlay-preview light-leak"></div></div>
+                                <div class="sticker-item" data-sticker="dust" draggable="true"><div class="overlay-preview dust"></div></div>
+                                <div class="sticker-item" data-sticker="film-borders" draggable="true"><div class="overlay-preview film-borders"></div></div>
+                                <div class="sticker-item" data-sticker="scanlines" draggable="true"><div class="overlay-preview scanlines"></div></div>
+                                <div class="sticker-item" data-sticker="grain-overlay" draggable="true"><div class="overlay-preview grain"></div></div>
+                            </div>
+                        </div>
+                        <div class="stickers-category">
+                            <div class="category-header">Frame</div>
+                            <div class="stickers-grid">
+                                <div class="sticker-item" data-sticker="frame-round" draggable="true"><i class="far fa-circle"></i></div>
+                                <div class="sticker-item" data-sticker="frame-square" draggable="true"><i class="far fa-square"></i></div>
+                                <div class="sticker-item" data-sticker="frame-rounded" draggable="true"><i class="fas fa-square" style="border-radius:4px;"></i></div>
+                                <div class="sticker-item" data-sticker="frame-polaroid" draggable="true"><i class="far fa-image"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audio Library Panel -->
+                <div id="panel-audio-library" class="panel-content">
+                    <div class="panel-header">
+                        <div class="panel-search">
+                            <i class="fas fa-search"></i>
+                            <input type="text" placeholder="Cari audio..." id="audio-search">
+                        </div>
+                        <button class="icon-btn" id="import-audio-btn" title="Impor Audio"><i class="fas fa-plus"></i></button>
+                    </div>
+                    <div class="audio-categories">
+                        <div class="audio-category">
+                            <div class="category-header"><i class="fas fa-music"></i> Musik Latar</div>
+                            <div class="audio-list">
+                                <div class="audio-item" data-audio="bgm-corporate" draggable="true">
+                                    <i class="fas fa-play"></i>
+                                    <div class="audio-info"><span>Corporate Uplifting</span><small>2:30</small></div>
+                                </div>
+                                <div class="audio-item" data-audio="bgm-cinematic" draggable="true">
+                                    <i class="fas fa-play"></i>
+                                    <div class="audio-info"><span>Cinematic Epic</span><small>3:15</small></div>
+                                </div>
+                                <div class="audio-item" data-audio="bgm-upbeat" draggable="true">
+                                    <i class="fas fa-play"></i>
+                                    <div class="audio-info"><span>Upbeat Energetic</span><small>2:45</small></div>
+                                </div>
+                                <div class="audio-item" data-audio="bgm-chill" draggable="true">
+                                    <i class="fas fa-play"></i>
+                                    <div class="audio-info"><span>Chill Lo-Fi</span><small>4:00</small></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="audio-category">
+                            <div class="category-header"><i class="fas fa-volume-up"></i> Sound Effects</div>
+                            <div class="audio-list">
+                                <div class="audio-item" data-audio="sfx-whoosh" draggable="true">
+                                    <i class="fas fa-play"></i>
+                                    <div class="audio-info"><span>Whoosh</span><small>0:02</small></div>
+                                </div>
+                                <div class="audio-item" data-audio="sfx-click" draggable="true">
+                                    <i class="fas fa-play"></i>
+                                    <div class="audio-info"><span>Click</span><small>0:01</small></div>
+                                </div>
+                                <div class="audio-item" data-audio="sfx-pop" draggable="true">
+                                    <i class="fas fa-play"></i>
+                                    <div class="audio-info"><span>Pop</span><small>0:01</small></div>
+                                </div>
+                                <div class="audio-item" data-audio="sfx-transition" draggable="true">
+                                    <i class="fas fa-play"></i>
+                                    <div class="audio-info"><span>Transition Swoosh</span><small>0:03</small></div>
+                                </div>
+                                <div class="audio-item" data-audio="sfx-impact" draggable="true">
+                                    <i class="fas fa-play"></i>
+                                    <div class="audio-info"><span>Impact Hit</span><small>0:02</small></div>
+                                </div>
+                                <div class="audio-item" data-audio="sfx-notification" draggable="true">
+                                    <i class="fas fa-play"></i>
+                                    <div class="audio-info"><span>Notification</span><small>0:02</small></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Left Panel Resize Handle -->
+            <div class="resize-handle resize-horizontal" id="left-resize"></div>
+
+            <!-- Center - Preview Player -->
+            <div id="center-panel" class="center-panel">
+                <div class="preview-container">
+                    <div class="preview-header">
+                        <div class="preview-tabs">
+                            <button class="preview-tab active" data-preview="source">Source</button>
+                            <button class="preview-tab" data-preview="program">Program</button>
+                        </div>
+                        <div class="preview-actions">
+                            <button class="icon-btn" id="safe-zone-btn" title="Safe Zone"><i class="fas fa-border-all"></i></button>
+                            <button class="icon-btn" id="grid-btn" title="Grid"><i class="fas fa-th"></i></button>
+                            <button class="icon-btn" id="snapshot-btn" title="Snapshot"><i class="fas fa-camera"></i></button>
+                            <button class="icon-btn" id="fullscreen-preview-btn" title="Fullscreen"><i class="fas fa-expand"></i></button>
+                        </div>
+                    </div>
+                    <div class="preview-viewport" id="preview-viewport">
+                        <canvas id="preview-canvas"></canvas>
+                        <div id="preview-overlay" class="preview-overlay">
+                            <div id="safe-zone" class="safe-zone" style="display:none;">
+                                <div class="safe-area safe-action"></div>
+                                <div class="safe-area safe-title"></div>
+                            </div>
+                            <div id="grid-overlay" class="grid-overlay" style="display:none;"></div>
+                            <div id="text-overlay-container" class="text-overlay-container"></div>
+                        </div>
+                        <div class="preview-no-content" id="preview-no-content">
+                            <i class="fas fa-film"></i>
+                            <p>Tambahkan media ke timeline untuk preview</p>
+                        </div>
+                    </div>
+                    <div class="preview-controls">
+                        <div class="preview-controls-left">
+                            <button class="ctrl-btn" id="go-to-start-btn" title="Go to Start (Home)"><i class="fas fa-step-backward"></i></button>
+                            <button class="ctrl-btn" id="prev-frame-btn" title="Previous Frame (Left)"><i class="fas fa-backward"></i></button>
+                            <button class="ctrl-btn play-btn" id="play-btn" title="Play/Pause (Space)"><i class="fas fa-play"></i></button>
+                            <button class="ctrl-btn" id="next-frame-btn" title="Next Frame (Right)"><i class="fas fa-forward"></i></button>
+                            <button class="ctrl-btn" id="go-to-end-btn" title="Go to End (End)"><i class="fas fa-step-forward"></i></button>
+                            <div class="controls-divider"></div>
+                            <button class="ctrl-btn" id="loop-btn" title="Loop"><i class="fas fa-redo"></i></button>
+                            <button class="ctrl-btn" id="shuffle-btn" title="Shuttle"><i class="fas fa-random"></i></button>
+                        </div>
+                        <div class="preview-timecode">
+                            <span id="current-time" class="timecode">00:00:00:00</span>
+                            <span class="timecode-sep">/</span>
+                            <span id="duration-time" class="timecode">00:00:00:00</span>
+                        </div>
+                        <div class="preview-controls-right">
+                            <div class="volume-control">
+                                <button class="ctrl-btn" id="mute-btn" title="Mute"><i class="fas fa-volume-up"></i></button>
+                                <div class="volume-slider-container">
+                                    <input type="range" id="volume-slider" min="0" max="100" value="100" class="volume-slider">
+                                </div>
+                            </div>
+                            <div class="speed-control">
+                                <select id="playback-speed" class="speed-select">
+                                    <option value="0.25">0.25x</option>
+                                    <option value="0.5">0.5x</option>
+                                    <option value="0.75">0.75x</option>
+                                    <option value="1" selected>1x</option>
+                                    <option value="1.25">1.25x</option>
+                                    <option value="1.5">1.5x</option>
+                                    <option value="2">2x</option>
+                                    <option value="4">4x</option>
+                                </select>
+                            </div>
+                            <button class="ctrl-btn" id="fullscreen-player-btn" title="Fullscreen Player"><i class="fas fa-expand-arrows-alt"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Panel Resize Handle -->
+            <div class="resize-handle resize-horizontal" id="right-resize"></div>
+
+            <!-- Right Panel - Properties / Inspector -->
+            <div id="right-panel" class="right-panel">
+                <div class="panel-tabs">
+                    <button class="panel-tab active" data-rpanel="properties">
+                        <i class="fas fa-sliders-h"></i>
+                        <span>Properti</span>
+                    </button>
+                    <button class="panel-tab" data-rpanel="color">
+                        <i class="fas fa-palette"></i>
+                        <span>Warna</span>
+                    </button>
+                    <button class="panel-tab" data-rpanel="audio-mixer">
+                        <i class="fas fa-volume-up"></i>
+                        <span>Audio</span>
+                    </button>
+                    <button class="panel-tab" data-rpanel="keyframes">
+                        <i class="fas fa-bezier-curve"></i>
+                        <span>Keyframe</span>
+                    </button>
+                </div>
+
+                <!-- Properties Panel -->
+                <div id="rpanel-properties" class="panel-content active">
+                    <div id="no-selection" class="no-selection">
+                        <i class="fas fa-mouse-pointer"></i>
+                        <p>Pilih klip untuk melihat properti</p>
+                    </div>
+                    <div id="clip-properties" class="clip-properties" style="display:none;">
+                        <div class="prop-section">
+                            <div class="prop-section-header">
+                                <i class="fas fa-info-circle"></i> Info Klip
+                                <button class="collapse-btn"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="prop-section-content">
+                                <div class="prop-row">
+                                    <label>Nama</label>
+                                    <input type="text" id="prop-clip-name" class="prop-input">
+                                </div>
+                                <div class="prop-row">
+                                    <label>Durasi</label>
+                                    <input type="text" id="prop-clip-duration" class="prop-input" readonly>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Kecepatan</label>
+                                    <div class="prop-input-group">
+                                        <input type="number" id="prop-clip-speed" class="prop-input" value="1" step="0.1" min="0.1" max="10">
+                                        <span class="prop-unit">x</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prop-section">
+                            <div class="prop-section-header">
+                                <i class="fas fa-expand-arrows-alt"></i> Transform
+                                <button class="collapse-btn"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="prop-section-content">
+                                <div class="prop-row">
+                                    <label>Posisi X</label>
+                                    <input type="number" id="prop-pos-x" class="prop-input" value="0">
+                                </div>
+                                <div class="prop-row">
+                                    <label>Posisi Y</label>
+                                    <input type="number" id="prop-pos-y" class="prop-input" value="0">
+                                </div>
+                                <div class="prop-row">
+                                    <label>Skala</label>
+                                    <div class="prop-input-group">
+                                        <input type="number" id="prop-scale" class="prop-input" value="100" step="1" min="0" max="500">
+                                        <span class="prop-unit">%</span>
+                                    </div>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Rotasi</label>
+                                    <div class="prop-input-group">
+                                        <input type="number" id="prop-rotation" class="prop-input" value="0" step="1" min="-360" max="360">
+                                        <span class="prop-unit">deg</span>
+                                    </div>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Opacity</label>
+                                    <div class="prop-input-group">
+                                        <input type="number" id="prop-opacity" class="prop-input" value="100" step="1" min="0" max="100">
+                                        <span class="prop-unit">%</span>
+                                    </div>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Anchor X</label>
+                                    <input type="number" id="prop-anchor-x" class="prop-input" value="0">
+                                </div>
+                                <div class="prop-row">
+                                    <label>Anchor Y</label>
+                                    <input type="number" id="prop-anchor-y" class="prop-input" value="0">
+                                </div>
+                                <div class="prop-row">
+                                    <label>Flip</label>
+                                    <div class="prop-btn-group">
+                                        <button class="prop-btn" id="flip-h-btn" title="Flip Horizontal"><i class="fas fa-arrows-alt-h"></i></button>
+                                        <button class="prop-btn" id="flip-v-btn" title="Flip Vertical"><i class="fas fa-arrows-alt-v"></i></button>
+                                        <button class="prop-btn" id="reset-transform-btn" title="Reset Transform"><i class="fas fa-undo"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prop-section">
+                            <div class="prop-section-header">
+                                <i class="fas fa-crop-alt"></i> Crop
+                                <button class="collapse-btn"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="prop-section-content">
+                                <div class="prop-row">
+                                    <label>Atas</label>
+                                    <input type="number" id="prop-crop-top" class="prop-input" value="0" min="0">
+                                </div>
+                                <div class="prop-row">
+                                    <label>Kanan</label>
+                                    <input type="number" id="prop-crop-right" class="prop-input" value="0" min="0">
+                                </div>
+                                <div class="prop-row">
+                                    <label>Bawah</label>
+                                    <input type="number" id="prop-crop-bottom" class="prop-input" value="0" min="0">
+                                </div>
+                                <div class="prop-row">
+                                    <label>Kiri</label>
+                                    <input type="number" id="prop-crop-left" class="prop-input" value="0" min="0">
+                                </div>
+                                <div class="prop-row">
+                                    <label></label>
+                                    <button class="btn-secondary" id="reset-crop-btn">Reset Crop</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prop-section">
+                            <div class="prop-section-header">
+                                <i class="fas fa-clock"></i> Speed / Duration
+                                <button class="collapse-btn"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="prop-section-content">
+                                <div class="prop-row">
+                                    <label>Kecepatan</label>
+                                    <input type="range" id="prop-speed-slider" min="10" max="1000" value="100" class="prop-range">
+                                    <span id="prop-speed-value" class="prop-value">100%</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Reverse</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="prop-reverse">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Maintain Pitch</label>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" id="prop-maintain-pitch" checked>
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                                <div class="speed-presets">
+                                    <button class="speed-preset" data-speed="25">0.25x</button>
+                                    <button class="speed-preset" data-speed="50">0.5x</button>
+                                    <button class="speed-preset" data-speed="75">0.75x</button>
+                                    <button class="speed-preset active" data-speed="100">1x</button>
+                                    <button class="speed-preset" data-speed="150">1.5x</button>
+                                    <button class="speed-preset" data-speed="200">2x</button>
+                                    <button class="speed-preset" data-speed="400">4x</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prop-section">
+                            <div class="prop-section-header">
+                                <i class="fas fa-magic"></i> Efek Aktif
+                                <button class="collapse-btn"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="prop-section-content">
+                                <div id="active-effects-list" class="active-effects-list">
+                                    <div class="no-effects">Belum ada efek ditambahkan</div>
+                                </div>
+                                <button class="btn-secondary" id="add-effect-btn"><i class="fas fa-plus"></i> Tambah Efek</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Color Panel -->
+                <div id="rpanel-color" class="panel-content">
+                    <div class="color-correction">
+                        <div class="prop-section">
+                            <div class="prop-section-header">
+                                <i class="fas fa-adjust"></i> Basic Correction
+                                <button class="collapse-btn"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="prop-section-content">
+                                <div class="prop-row">
+                                    <label>Exposure</label>
+                                    <input type="range" id="color-exposure" min="-100" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Contrast</label>
+                                    <input type="range" id="color-contrast" min="-100" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Highlights</label>
+                                    <input type="range" id="color-highlights" min="-100" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Shadows</label>
+                                    <input type="range" id="color-shadows" min="-100" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Whites</label>
+                                    <input type="range" id="color-whites" min="-100" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Blacks</label>
+                                    <input type="range" id="color-blacks" min="-100" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Temperature</label>
+                                    <input type="range" id="color-temperature" min="-100" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Tint</label>
+                                    <input type="range" id="color-tint" min="-100" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Saturation</label>
+                                    <input type="range" id="color-saturation" min="-100" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Vibrance</label>
+                                    <input type="range" id="color-vibrance" min="-100" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Hue</label>
+                                    <input type="range" id="color-hue" min="-180" max="180" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Sharpness</label>
+                                    <input type="range" id="color-sharpness" min="0" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Vignette</label>
+                                    <input type="range" id="color-vignette" min="0" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                                <div class="prop-row">
+                                    <label>Grain</label>
+                                    <input type="range" id="color-grain" min="0" max="100" value="0" class="prop-range">
+                                    <span class="prop-value">0</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prop-section">
+                            <div class="prop-section-header">
+                                <i class="fas fa-circle-notch"></i> Color Wheels
+                                <button class="collapse-btn"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="prop-section-content">
+                                <div class="color-wheels">
+                                    <div class="color-wheel-group">
+                                        <label>Lift</label>
+                                        <canvas class="color-wheel-canvas" id="wheel-lift" width="120" height="120"></canvas>
+                                        <div class="wheel-slider">
+                                            <input type="range" id="lift-luma" min="-100" max="100" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="color-wheel-group">
+                                        <label>Gamma</label>
+                                        <canvas class="color-wheel-canvas" id="wheel-gamma" width="120" height="120"></canvas>
+                                        <div class="wheel-slider">
+                                            <input type="range" id="gamma-luma" min="-100" max="100" value="0">
+                                        </div>
+                                    </div>
+                                    <div class="color-wheel-group">
+                                        <label>Gain</label>
+                                        <canvas class="color-wheel-canvas" id="wheel-gain" width="120" height="120"></canvas>
+                                        <div class="wheel-slider">
+                                            <input type="range" id="gain-luma" min="-100" max="100" value="0">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prop-section">
+                            <div class="prop-section-header">
+                                <i class="fas fa-chart-line"></i> Curves
+                                <button class="collapse-btn"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="prop-section-content">
+                                <div class="curves-editor">
+                                    <div class="curves-channel-select">
+                                        <button class="channel-btn active" data-channel="luma">Luma</button>
+                                        <button class="channel-btn" data-channel="red">Red</button>
+                                        <button class="channel-btn" data-channel="green">Green</button>
+                                        <button class="channel-btn" data-channel="blue">Blue</button>
+                                    </div>
+                                    <canvas id="curves-canvas" width="250" height="250"></canvas>
+                                    <div class="curves-points" id="curves-points"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="prop-section">
+                            <div class="prop-section-header">
+                                <i class="fas fa-swatchbook"></i> LUT / Preset
+                                <button class="collapse-btn"><i class="fas fa-chevron-down"></i></button>
+                            </div>
+                            <div class="prop-section-content">
+                                <div class="lut-presets">
+                                    <div class="lut-preset-item" data-lut="cinematic">Cinematic</div>
+                                    <div class="lut-preset-item" data-lut="vintage">Vintage</div>
+                                    <div class="lut-preset-item" data-lut="moody">Moody</div>
+                                    <div class="lut-preset-item" data-lut="teal-orange">Teal & Orange</div>
+                                    <div class="lut-preset-item" data-lut="desaturated">Desaturated</div>
+                                    <div class="lut-preset-item" data-lut="bw">Black & White</div>
+                                    <div class="lut-preset-item" data-lut="sepia">Sepia</div>
+                                    <div class="lut-preset-item" data-lut="cool">Cool Tone</div>
+                                    <div class="lut-preset-item" data-lut="warm">Warm Tone</div>
+                                    <div class="lut-preset-item" data-lut="pastel">Pastel</div>
+                                    <div class="lut-preset-item" data-lut="high-contrast">High Contrast</div>
+                                    <div class="lut-preset-item" data-lut="film-emulation">Film Emulation</div>
+                                </div>
+                                <button class="btn-secondary" id="import-lut-btn"><i class="fas fa-file-import"></i> Impor LUT</button>
+                            </div>
+                        </div>
+                        <div class="color-actions">
+                            <button class="btn-secondary" id="reset-color-btn"><i class="fas fa-undo"></i> Reset Semua</button>
+                            <button class="btn-secondary" id="save-color-preset-btn"><i class="fas fa-save"></i> Simpan Preset</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audio Mixer Panel -->
+                <div id="rpanel-audio-mixer" class="panel-content">
+                    <div class="audio-mixer">
+                        <div class="mixer-header">
+                            <span>Audio Mixer</span>
+                            <button class="icon-btn" id="mixer-settings-btn"><i class="fas fa-cog"></i></button>
+                        </div>
+                        <div class="mixer-master">
+                            <div class="mixer-channel">
+                                <div class="channel-label">Master</div>
+                                <div class="meter-container">
+                                    <div class="meter-bar meter-left"><div class="meter-fill" id="master-meter-l"></div></div>
+                                    <div class="meter-bar meter-right"><div class="meter-fill" id="master-meter-r"></div></div>
+                                </div>
+                                <input type="range" id="master-volume" class="mixer-fader" min="-60" max="12" value="0">
+                                <div class="fader-value" id="master-volume-value">0 dB</div>
+                                <button class="mute-btn" id="master-mute">M</button>
+                                <button class="solo-btn" id="master-solo">S</button>
+                            </div>
+                        </div>
+                        <div class="mixer-channels" id="mixer-channels">
+                            <!-- Dynamic audio channels will be added here -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Keyframes Panel -->
+                <div id="rpanel-keyframes" class="panel-content">
+                    <div class="keyframe-editor">
+                        <div class="keyframe-header">
+                            <span>Keyframe Editor</span>
+                            <div class="keyframe-actions">
+                                <button class="icon-btn" id="add-keyframe-btn" title="Tambah Keyframe"><i class="fas fa-plus"></i></button>
+                                <button class="icon-btn" id="delete-keyframe-btn" title="Hapus Keyframe"><i class="fas fa-trash"></i></button>
+                                <button class="icon-btn" id="prev-keyframe-btn" title="Keyframe Sebelumnya"><i class="fas fa-step-backward"></i></button>
+                                <button class="icon-btn" id="next-keyframe-btn" title="Keyframe Berikutnya"><i class="fas fa-step-forward"></i></button>
+                            </div>
+                        </div>
+                        <div class="keyframe-properties" id="keyframe-properties">
+                            <div class="prop-section">
+                                <div class="prop-section-header">Posisi</div>
+                                <div class="prop-section-content">
+                                    <div class="keyframe-row">
+                                        <button class="keyframe-diamond" data-prop="position-x"><i class="fas fa-diamond"></i></button>
+                                        <label>X</label>
+                                        <input type="number" class="prop-input kf-input" id="kf-pos-x" value="0">
+                                    </div>
+                                    <div class="keyframe-row">
+                                        <button class="keyframe-diamond" data-prop="position-y"><i class="fas fa-diamond"></i></button>
+                                        <label>Y</label>
+                                        <input type="number" class="prop-input kf-input" id="kf-pos-y" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="prop-section">
+                                <div class="prop-section-header">Skala</div>
+                                <div class="prop-section-content">
+                                    <div class="keyframe-row">
+                                        <button class="keyframe-diamond" data-prop="scale"><i class="fas fa-diamond"></i></button>
+                                        <label>Scale</label>
+                                        <input type="number" class="prop-input kf-input" id="kf-scale" value="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="prop-section">
+                                <div class="prop-section-header">Rotasi</div>
+                                <div class="prop-section-content">
+                                    <div class="keyframe-row">
+                                        <button class="keyframe-diamond" data-prop="rotation"><i class="fas fa-diamond"></i></button>
+                                        <label>Rotation</label>
+                                        <input type="number" class="prop-input kf-input" id="kf-rotation" value="0">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="prop-section">
+                                <div class="prop-section-header">Opacity</div>
+                                <div class="prop-section-content">
+                                    <div class="keyframe-row">
+                                        <button class="keyframe-diamond" data-prop="opacity"><i class="fas fa-diamond"></i></button>
+                                        <label>Opacity</label>
+                                        <input type="number" class="prop-input kf-input" id="kf-opacity" value="100">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="prop-section">
+                                <div class="prop-section-header">Easing</div>
+                                <div class="prop-section-content">
+                                    <div class="easing-select">
+                                        <button class="easing-btn active" data-easing="linear" title="Linear">━</button>
+                                        <button class="easing-btn" data-easing="ease-in" title="Ease In">╰</button>
+                                        <button class="easing-btn" data-easing="ease-out" title="Ease Out">╯</button>
+                                        <button class="easing-btn" data-easing="ease-in-out" title="Ease In Out">⌒</button>
+                                        <button class="easing-btn" data-easing="bezier" title="Bezier">〰</button>
+                                        <button class="easing-btn" data-easing="bounce" title="Bounce">⌇</button>
+                                        <button class="easing-btn" data-easing="elastic" title="Elastic">〜</button>
+                                        <button class="easing-btn" data-easing="spring" title="Spring">∿</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="keyframe-timeline" id="keyframe-timeline">
+                            <canvas id="keyframe-canvas" width="300" height="150"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Timeline Area -->
+        <div id="timeline-area" class="timeline-area">
+            <!-- Timeline Resize Handle -->
+            <div class="resize-handle resize-vertical" id="timeline-resize"></div>
+            
+            <div class="timeline-header">
+                <div class="timeline-tools">
+                    <button class="timeline-tool-btn" id="add-video-track-btn" title="Tambah Track Video">
+                        <i class="fas fa-plus"></i> Video
+                    </button>
+                    <button class="timeline-tool-btn" id="add-audio-track-btn" title="Tambah Track Audio">
+                        <i class="fas fa-plus"></i> Audio
+                    </button>
+                    <div class="timeline-divider"></div>
+                    <button class="timeline-tool-btn" id="magnet-btn" title="Snap/Magnet">
+                        <i class="fas fa-magnet"></i>
+                    </button>
+                    <button class="timeline-tool-btn" id="ripple-btn" title="Ripple Edit">
+                        <i class="fas fa-exchange-alt"></i>
+                    </button>
+                    <button class="timeline-tool-btn" id="rolling-btn" title="Rolling Edit">
+                        <i class="fas fa-arrows-alt-h"></i>
+                    </button>
+                </div>
+                <div class="timeline-zoom">
+                    <button class="icon-btn" id="zoom-out-btn"><i class="fas fa-search-minus"></i></button>
+                    <input type="range" id="timeline-zoom" min="1" max="200" value="50" class="zoom-slider">
+                    <button class="icon-btn" id="zoom-in-btn"><i class="fas fa-search-plus"></i></button>
+                    <button class="icon-btn" id="zoom-fit-btn" title="Fit"><i class="fas fa-expand"></i></button>
+                </div>
+            </div>
+            
+            <div class="timeline-body">
+                <div class="track-labels" id="track-labels">
+                    <!-- Track labels will be dynamically added -->
+                </div>
+                <div class="timeline-scroll-container" id="timeline-scroll-container">
+                    <div class="time-ruler" id="time-ruler">
+                        <canvas id="ruler-canvas"></canvas>
+                    </div>
+                    <div class="tracks-container" id="tracks-container">
+                        <!-- Tracks will be dynamically added -->
+                    </div>
+                    <div class="playhead" id="playhead">
+                        <div class="playhead-head"></div>
+                        <div class="playhead-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Status Bar -->
+        <div id="status-bar" class="status-bar">
+            <div class="status-left">
+                <span id="status-tool">Selection Tool</span>
+                <span class="status-divider">|</span>
+                <span id="status-snap">Snap: ON</span>
+                <span class="status-divider">|</span>
+                <span id="status-project-size">1920 x 1080</span>
+            </div>
+            <div class="status-center">
+                <span id="status-action"></span>
+            </div>
+            <div class="status-right">
+                <span id="status-clips">0 klip</span>
+                <span class="status-divider">|</span>
+                <span id="status-duration">Durasi: 00:00:00</span>
+                <span class="status-divider">|</span>
+                <span id="status-memory">Memori: 0 MB</span>
+                <span class="status-divider">|</span>
+                <span id="status-render">Render: Idle</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: New Project -->
+    <div id="modal-new-project" class="modal" style="display:none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Proyek Baru</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nama Proyek</label>
+                    <input type="text" id="new-project-name" class="form-input" value="Proyek Tanpa Judul">
+                </div>
+                <div class="form-group">
+                    <label>Preset</label>
+                    <select id="new-project-preset" class="form-select">
+                        <option value="full-hd">Full HD 1080p (1920x1080)</option>
+                        <option value="4k">4K UHD (3840x2160)</option>
+                        <option value="2k">2K QHD (2560x1440)</option>
+                        <option value="hd">HD 720p (1280x720)</option>
+                        <option value="vertical">Vertikal (1080x1920)</option>
+                        <option value="square">Square (1080x1080)</option>
+                        <option value="custom">Custom</option>
+                    </select>
+                </div>
+                <div class="form-group" id="custom-resolution-group" style="display:none;">
+                    <div class="form-row">
+                        <div class="form-col">
+                            <label>Lebar</label>
+                            <input type="number" id="custom-width" class="form-input" value="1920">
+                        </div>
+                        <div class="form-col">
+                            <label>Tinggi</label>
+                            <input type="number" id="custom-height" class="form-input" value="1080">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Frame Rate</label>
+                    <select id="new-project-fps" class="form-select">
+                        <option value="24">24 fps (Film)</option>
+                        <option value="25">25 fps (PAL)</option>
+                        <option value="30" selected>30 fps (NTSC)</option>
+                        <option value="50">50 fps</option>
+                        <option value="60">60 fps</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Aspect Ratio</label>
+                    <select id="new-project-ratio" class="form-select">
+                        <option value="16:9">16:9 (Widescreen)</option>
+                        <option value="9:16">9:16 (Portrait)</option>
+                        <option value="1:1">1:1 (Square)</option>
+                        <option value="4:3">4:3 (Standard)</option>
+                        <option value="4:5">4:5 (Instagram)</option>
+                        <option value="21:9">21:9 (Ultrawide)</option>
+                    </select>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary modal-cancel">Batal</button>
+                <button class="btn-primary" id="create-project-btn">Buat Proyek</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Export -->
+    <div id="modal-export" class="modal" style="display:none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2>Ekspor Video</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="export-settings">
+                    <div class="export-preview">
+                        <canvas id="export-preview-canvas" width="320" height="180"></canvas>
+                    </div>
+                    <div class="export-options">
+                        <div class="form-group">
+                            <label>Format</label>
+                            <select id="export-format" class="form-select">
+                                <option value="mp4">MP4 (H.264)</option>
+                                <option value="webm">WebM (VP9)</option>
+                                <option value="mov">MOV (ProRes)</option>
+                                <option value="avi">AVI</option>
+                                <option value="gif">GIF</option>
+                                <option value="png-sequence">PNG Sequence</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Resolusi</label>
+                            <select id="export-resolution" class="form-select">
+                                <option value="source">Sesuai Sumber</option>
+                                <option value="4k">4K (3840x2160)</option>
+                                <option value="2k">2K (2560x1440)</option>
+                                <option value="1080p">Full HD (1920x1080)</option>
+                                <option value="720p">HD (1280x720)</option>
+                                <option value="480p">SD (854x480)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Quality</label>
+                            <input type="range" id="export-quality" min="1" max="100" value="80" class="prop-range">
+                            <span id="export-quality-value">80%</span>
+                        </div>
+                        <div class="form-group">
+                            <label>Frame Rate</label>
+                            <select id="export-fps" class="form-select">
+                                <option value="24">24 fps</option>
+                                <option value="30" selected>30 fps</option>
+                                <option value="60">60 fps</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Bitrate</label>
+                            <select id="export-bitrate" class="form-select">
+                                <option value="auto" selected>Auto</option>
+                                <option value="5">5 Mbps</option>
+                                <option value="10">10 Mbps</option>
+                                <option value="15">15 Mbps</option>
+                                <option value="20">20 Mbps</option>
+                                <option value="30">30 Mbps</option>
+                                <option value="50">50 Mbps</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Audio Codec</label>
+                            <select id="export-audio-codec" class="form-select">
+                                <option value="aac" selected>AAC</option>
+                                <option value="mp3">MP3</option>
+                                <option value="wav">WAV (Uncompressed)</option>
+                                <option value="opus">Opus</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Audio Bitrate</label>
+                            <select id="export-audio-bitrate" class="form-select">
+                                <option value="128">128 kbps</option>
+                                <option value="192" selected>192 kbps</option>
+                                <option value="256">256 kbps</option>
+                                <option value="320">320 kbps</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Range Ekspor</label>
+                            <select id="export-range" class="form-select">
+                                <option value="full" selected>Seluruh Sequence</option>
+                                <option value="in-out">In/Out Point</option>
+                                <option value="work-area">Work Area</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="export-progress" id="export-progress" style="display:none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="export-progress-fill"></div>
+                    </div>
+                    <div class="progress-info">
+                        <span id="export-progress-text">Mengekspor... 0%</span>
+                        <span id="export-eta">Estimasi: Menghitung...</span>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary modal-cancel">Batal</button>
+                <button class="btn-primary" id="start-export-btn"><i class="fas fa-download"></i> Ekspor</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Keyboard Shortcuts -->
+    <div id="modal-shortcuts" class="modal" style="display:none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2>Pintasan Keyboard</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="shortcuts-grid">
+                    <div class="shortcut-category">
+                        <h3>Umum</h3>
+                        <div class="shortcut-item"><span>Ctrl+N</span> Proyek Baru</div>
+                        <div class="shortcut-item"><span>Ctrl+O</span> Buka Proyek</div>
+                        <div class="shortcut-item"><span>Ctrl+S</span> Simpan Proyek</div>
+                        <div class="shortcut-item"><span>Ctrl+Z</span> Undo</div>
+                        <div class="shortcut-item"><span>Ctrl+Shift+Z</span> Redo</div>
+                        <div class="shortcut-item"><span>Ctrl+I</span> Impor Media</div>
+                        <div class="shortcut-item"><span>Space</span> Play/Pause</div>
+                    </div>
+                    <div class="shortcut-category">
+                        <h3>Timeline</h3>
+                        <div class="shortcut-item"><span>S</span> Split di Playhead</div>
+                        <div class="shortcut-item"><span>Delete</span> Hapus Klip</div>
+                        <div class="shortcut-item"><span>M</span> Tambah Marker</div>
+                        <div class="shortcut-item"><span>N</span> Toggle Snap</div>
+                        <div class="shortcut-item"><span>V</span> Selection Tool</div>
+                        <div class="shortcut-item"><span>C</span> Razor Tool</div>
+                        <div class="shortcut-item"><span>H</span> Hand Tool</div>
+                        <div class="shortcut-item"><span>Z</span> Zoom Tool</div>
+                        <div class="shortcut-item"><span>Ctrl+=</span> Zoom In</div>
+                        <div class="shortcut-item"><span>Ctrl+-</span> Zoom Out</div>
+                        <div class="shortcut-item"><span>Home</span> Go to Start</div>
+                        <div class="shortcut-item"><span>End</span> Go to End</div>
+                    </div>
+                    <div class="shortcut-category">
+                        <h3>Playback</h3>
+                        <div class="shortcut-item"><span>Left</span> Previous Frame</div>
+                        <div class="shortcut-item"><span>Right</span> Next Frame</div>
+                        <div class="shortcut-item"><span>Shift+Left</span> -10 Frames</div>
+                        <div class="shortcut-item"><span>Shift+Right</span> +10 Frames</div>
+                        <div class="shortcut-item"><span>J</span> Reverse Play</div>
+                        <div class="shortcut-item"><span>K</span> Stop</div>
+                        <div class="shortcut-item"><span>L</span> Forward Play</div>
+                        <div class="shortcut-item"><span>I</span> Set In Point</div>
+                        <div class="shortcut-item"><span>O</span> Set Out Point</div>
+                    </div>
+                    <div class="shortcut-category">
+                        <h3>Editing</h3>
+                        <div class="shortcut-item"><span>Ctrl+X</span> Cut</div>
+                        <div class="shortcut-item"><span>Ctrl+C</span> Copy</div>
+                        <div class="shortcut-item"><span>Ctrl+V</span> Paste</div>
+                        <div class="shortcut-item"><span>Ctrl+D</span> Duplicate</div>
+                        <div class="shortcut-item"><span>Ctrl+A</span> Select All</div>
+                        <div class="shortcut-item"><span>Ctrl+G</span> Group</div>
+                        <div class="shortcut-item"><span>F</span> Fullscreen Preview</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Project Settings -->
+    <div id="modal-project-settings" class="modal" style="display:none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Pengaturan Proyek</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>Nama Proyek</label>
+                    <input type="text" id="settings-project-name" class="form-input">
+                </div>
+                <div class="form-group">
+                    <label>Resolusi</label>
+                    <div class="form-row">
+                        <input type="number" id="settings-width" class="form-input" value="1920">
+                        <span>x</span>
+                        <input type="number" id="settings-height" class="form-input" value="1080">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Frame Rate</label>
+                    <select id="settings-fps" class="form-select">
+                        <option value="24">24 fps</option>
+                        <option value="25">25 fps</option>
+                        <option value="30" selected>30 fps</option>
+                        <option value="60">60 fps</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Background Color</label>
+                    <input type="color" id="settings-bg-color" class="form-color" value="#000000">
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary modal-cancel">Batal</button>
+                <button class="btn-primary" id="save-settings-btn">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal: Preferences -->
+    <div id="modal-preferences" class="modal" style="display:none;">
+        <div class="modal-overlay"></div>
+        <div class="modal-content modal-lg">
+            <div class="modal-header">
+                <h2>Preferensi</h2>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="pref-tabs">
+                    <button class="pref-tab active" data-ptab="general">Umum</button>
+                    <button class="pref-tab" data-ptab="playback">Playback</button>
+                    <button class="pref-tab" data-ptab="timeline">Timeline</button>
+                    <button class="pref-tab" data-ptab="appearance">Tampilan</button>
+                    <button class="pref-tab" data-ptab="performance">Performa</button>
+                    <button class="pref-tab" data-ptab="storage">Penyimpanan</button>
+                </div>
+                <div class="pref-content" id="pref-general">
+                    <div class="form-group">
+                        <label>Bahasa</label>
+                        <select class="form-select"><option>Bahasa Indonesia</option><option>English</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Auto-save</label>
+                        <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="form-group">
+                        <label>Auto-save Interval (menit)</label>
+                        <input type="number" class="form-input" value="5" min="1" max="30">
+                    </div>
+                    <div class="form-group">
+                        <label>Max Undo Steps</label>
+                        <input type="number" class="form-input" value="100" min="10" max="1000">
+                    </div>
+                </div>
+                <div class="pref-content" id="pref-playback" style="display:none;">
+                    <div class="form-group">
+                        <label>Default Playback Quality</label>
+                        <select class="form-select"><option>Full</option><option>Half</option><option>Quarter</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Paused Quality</label>
+                        <select class="form-select"><option>Full</option><option>Draft</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Pre-roll Duration (detik)</label>
+                        <input type="number" class="form-input" value="2">
+                    </div>
+                    <div class="form-group">
+                        <label>Post-roll Duration (detik)</label>
+                        <input type="number" class="form-input" value="2">
+                    </div>
+                </div>
+                <div class="pref-content" id="pref-timeline" style="display:none;">
+                    <div class="form-group">
+                        <label>Default Clip Height (px)</label>
+                        <input type="number" class="form-input" value="60" min="30" max="150">
+                    </div>
+                    <div class="form-group">
+                        <label>Show Waveform</label>
+                        <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="form-group">
+                        <label>Show Thumbnails</label>
+                        <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="form-group">
+                        <label>Snap Threshold (frames)</label>
+                        <input type="number" class="form-input" value="5" min="1" max="30">
+                    </div>
+                    <div class="form-group">
+                        <label>Default Transition Duration (ms)</label>
+                        <input type="number" class="form-input" value="500" min="100" max="5000">
+                    </div>
+                </div>
+                <div class="pref-content" id="pref-appearance" style="display:none;">
+                    <div class="form-group">
+                        <label>Theme</label>
+                        <select class="form-select"><option>Dark</option><option>Light</option><option>System</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Accent Color</label>
+                        <input type="color" class="form-color" value="#4a9eff">
+                    </div>
+                    <div class="form-group">
+                        <label>UI Scale</label>
+                        <input type="range" min="80" max="120" value="100" class="prop-range">
+                    </div>
+                    <div class="form-group">
+                        <label>Show Tooltips</label>
+                        <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                    </div>
+                </div>
+                <div class="pref-content" id="pref-performance" style="display:none;">
+                    <div class="form-group">
+                        <label>Hardware Acceleration</label>
+                        <label class="toggle-switch"><input type="checkbox" checked><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="form-group">
+                        <label>Render Quality</label>
+                        <select class="form-select"><option>High</option><option>Medium</option><option>Low</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Background Render</label>
+                        <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+                    </div>
+                    <div class="form-group">
+                        <label>Max Memory Usage (MB)</label>
+                        <input type="number" class="form-input" value="2048" min="512" max="8192">
+                    </div>
+                </div>
+                <div class="pref-content" id="pref-storage" style="display:none;">
+                    <div class="form-group">
+                        <label>Cache Location</label>
+                        <input type="text" class="form-input" value="/tmp/zcut/cache" readonly>
+                        <button class="btn-secondary" style="margin-top:5px;">Ubah</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Cache Size</label>
+                        <span>0 MB</span>
+                        <button class="btn-secondary" style="margin-top:5px;">Bersihkan Cache</button>
+                    </div>
+                    <div class="form-group">
+                        <label>Auto-delete Cache on Close</label>
+                        <label class="toggle-switch"><input type="checkbox"><span class="toggle-slider"></span></label>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn-secondary modal-cancel">Batal</button>
+                <button class="btn-primary" id="save-preferences-btn">Simpan</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toast-container" class="toast-container"></div>
+
+    <!-- Context Menu -->
+    <div id="timeline-context-menu" class="context-menu" style="display:none;">
+        <div class="context-option" data-action="cut"><i class="fas fa-cut"></i> Potong</div>
+        <div class="context-option" data-action="copy"><i class="fas fa-copy"></i> Salin</div>
+        <div class="context-option" data-action="paste"><i class="fas fa-paste"></i> Tempel</div>
+        <div class="context-separator"></div>
+        <div class="context-option" data-action="split"><i class="fas fa-scissors"></i> Split di Playhead</div>
+        <div class="context-option" data-action="ripple-delete"><i class="fas fa-backspace"></i> Ripple Delete</div>
+        <div class="context-option" data-action="lift"><i class="fas fa-arrow-up"></i> Lift</div>
+        <div class="context-separator"></div>
+        <div class="context-option" data-action="add-transition"><i class="fas fa-exchange-alt"></i> Tambah Transisi</div>
+        <div class="context-option" data-action="add-effect"><i class="fas fa-magic"></i> Tambah Efek</div>
+        <div class="context-separator"></div>
+        <div class="context-option" data-action="speed"><i class="fas fa-tachometer-alt"></i> Kecepatan</div>
+        <div class="context-option" data-action="reverse"><i class="fas fa-backward"></i> Putar Mundur</div>
+        <div class="context-option" data-action="freeze"><i class="fas fa-snowflake"></i> Freeze Frame</div>
+        <div class="context-separator"></div>
+        <div class="context-option" data-action="unlink-audio"><i class="fas fa-unlink"></i> Unlink Audio</div>
+        <div class="context-option" data-action="nest"><i class="fas fa-box"></i> Nest</div>
+        <div class="context-separator"></div>
+        <div class="context-option danger" data-action="delete"><i class="fas fa-trash"></i> Hapus</div>
+    </div>
+
+    <!-- Hidden file inputs -->
+    <input type="file" id="file-input" multiple accept="video/*,audio/*,image/*,.srt,.ass,.vtt" style="display:none;">
+    <input type="file" id="folder-input" webkitdirectory accept="video/*,audio/*,image/*" style="display:none;">
+    <input type="file" id="project-input" accept=".zcut,.json" style="display:none;">
+    <input type="file" id="lut-input" accept=".cube,.3dl,.lut" style="display:none;">
+    <input type="file" id="subtitle-input" accept=".srt,.ass,.vtt" style="display:none;">
+
+    <!-- Drag & Drop Overlay -->
+    <div id="drop-overlay" class="drop-overlay" style="display:none;">
+        <div class="drop-content">
+            <i class="fas fa-cloud-upload-alt"></i>
+            <h2>Lepaskan File untuk Mengimpor</h2>
+            <p>Video, Audio, Gambar, Subtitle</p>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/spectrum/1.8.1/spectrum.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/noUiSlider/15.7.1/nouislider.min.js"></script>
+    <script src="js/core.js"></script>
+    <script src="js/media.js"></script>
+    <script src="js/timeline.js"></script>
+    <script src="js/player.js"></script>
+    <script src="js/effects.js"></script>
+    <script src="js/creative.js"></script>
+    <script src="js/ui.js"></script>
+    <script src="js/export.js"></script>
+</body>
+</html>
